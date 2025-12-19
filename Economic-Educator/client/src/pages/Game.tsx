@@ -17,7 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, ArrowRight, Home } from "lucide-react";
 import { Link } from "wouter";
 
-type GamePhase = 'welcome' | 'decision' | 'council' | 'result';
+type GamePhase = 'welcome' | 'decision' | 'council' | 'result' | 'gameover';
 
 export default function Game() {
   const [, params] = useRoute("/game/:difficulty");
@@ -59,8 +59,16 @@ export default function Game() {
   };
 
   const handleNextRound = () => {
-    // Check for Game Over logic or Scenario progression here
-    // For prototype, we just loop or pick random scenario
+    // Check if game should end after 5 rounds
+    if (gameState.round >= 5) {
+      setGameState(prev => prev ? ({
+        ...prev,
+        isGameOver: true
+      }) : null);
+      setPhase('gameover');
+      return;
+    }
+    
     const nextScenarioIndex = (gameState.round) % SCENARIOS[difficulty].length;
     const nextScenario = SCENARIOS[difficulty][nextScenarioIndex] || SCENARIOS[difficulty][0];
     
@@ -163,9 +171,43 @@ export default function Game() {
 
               <div className="flex justify-center pt-8">
                 <Button size="lg" onClick={handleNextRound} className="text-xl px-12 h-16 rounded-lg shadow-lg">
-                  Weiter zur nächsten Runde
+                  {gameState.round >= 5 ? 'Spiel beenden' : 'Weiter zur nächsten Runde'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {phase === 'gameover' && (
+            <motion.div
+              key="gameover"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              className="space-y-8 py-12"
+            >
+              <div className="text-center space-y-6">
+                <h2 className="text-5xl sm:text-6xl font-serif font-bold text-primary mb-4">
+                  Spiel vorbei!
+                </h2>
+                <div className="inline-block p-6 rounded-lg bg-primary/10 border-2 border-primary">
+                  <p className="text-6xl font-bold text-primary">{gameState.score}</p>
+                  <p className="text-xl text-muted-foreground mt-2">Punkte</p>
+                </div>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Sie haben 5 Runden als EZB-Ratsvorsitzender absolviert.
+                </p>
+              </div>
+
+              <EconomicDashboard indicators={gameState.indicators} />
+
+              <div className="flex justify-center gap-4 pt-8">
+                <Link href="/">
+                  <Button size="lg" variant="outline" className="text-lg px-12 h-14">
+                    <Home className="mr-2 h-5 w-5" />
+                    Zur Startseite
+                  </Button>
+                </Link>
               </div>
             </motion.div>
           )}
