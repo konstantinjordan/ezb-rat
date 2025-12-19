@@ -98,9 +98,6 @@ export default function Game() {
             <div className="bg-primary-foreground/10 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
               R{gameState.round}
             </div>
-            <div className="bg-secondary text-secondary-foreground px-2 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
-              {gameState.score}
-            </div>
           </div>
         </div>
       </header>
