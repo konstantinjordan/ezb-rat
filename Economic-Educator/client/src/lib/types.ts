@@ -50,6 +50,7 @@ export interface PlayerDecision {
   standingFacility?: 'emergency_lending' | 'deposit_facility' | 'standard' | null;
   minimumReserve?: 'increase' | 'decrease' | 'hold' | null;
   argument?: string; // ID of the argument selected
+  votesPassed?: boolean; // Whether the council voted to pass the decision
 }
 
 export interface CouncilMember {

@@ -20,7 +20,7 @@ const COUNCIL_MEMBERS: CouncilMember[] = [
 
 interface CouncilVoteProps {
   decision: PlayerDecision;
-  onComplete: () => void;
+  onComplete: (passing: boolean) => void;
 }
 
 function calculateCoherence(decision: PlayerDecision, memberType: 'hawk' | 'dove' | 'centrist'): number {
@@ -180,7 +180,7 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
           className="text-center"
         >
           <button 
-            onClick={onComplete}
+            onClick={() => onComplete(passing)}
             className="bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
           >
             Ergebnisse ansehen

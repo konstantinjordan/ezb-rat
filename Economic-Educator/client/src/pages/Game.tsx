@@ -49,9 +49,10 @@ export default function Game() {
     setPhase('council');
   };
 
-  const handleCouncilComplete = () => {
+  const handleCouncilComplete = (passing: boolean) => {
     if (currentDecision && gameState) {
-      const nextState = calculateNextState(gameState, currentDecision);
+      const decisionWithVote = { ...currentDecision, votesPassed: passing };
+      const nextState = calculateNextState(gameState, decisionWithVote);
       setGameState(nextState);
       setPhase('result');
     }

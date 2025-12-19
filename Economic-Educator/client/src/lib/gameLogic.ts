@@ -95,45 +95,55 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
   let inflationChange = 0;
   let growthChange = 0;
 
+  // Check if vote was rejected
+  const voteRejected = decision.votesPassed === false;
+
   // Difficulty-based randomness: affects volatility
   const difficultyMultiplier = nextState.difficulty === 'beginner' ? 0.5 : nextState.difficulty === 'advanced' ? 1.0 : 1.5;
   const randomVariation = (Math.random() - 0.5) * 0.2 * difficultyMultiplier;
 
-  // 1. Interest Rate Effect (only if selected)
-  if (decision.interestRate) {
-    if (decision.interestRate === 'raise') {
-      inflationChange -= 0.5; // Strong effect fighting inflation
-      growthChange -= 0.3;    // Cools economy
-    } else if (decision.interestRate === 'lower') {
-      inflationChange += 0.4; // Stimulates inflation
-      growthChange += 0.4;    // Stimulates growth
+  // If vote was rejected, apply negative consequences
+  if (voteRejected) {
+    inflationChange += 0.3;  // Inflation worsens due to lack of clear policy
+    growthChange -= 0.2;     // Growth slows due to policy uncertainty
+  } else {
+    // Apply policy effects only if vote passed
+    // 1. Interest Rate Effect (only if selected)
+    if (decision.interestRate) {
+      if (decision.interestRate === 'raise') {
+        inflationChange -= 0.5; // Strong effect fighting inflation
+        growthChange -= 0.3;    // Cools economy
+      } else if (decision.interestRate === 'lower') {
+        inflationChange += 0.4; // Stimulates inflation
+        growthChange += 0.4;    // Stimulates growth
+      }
+      // 'hold' does nothing
     }
-    // 'hold' does nothing
-  }
 
-  // 2. Open Market Operations (QE/QT) (only if selected)
-  if (decision.openMarket) {
-    if (decision.openMarket === 'buy') { // QE
-      inflationChange += 0.2;
-      growthChange += 0.3;
-    } else if (decision.openMarket === 'sell') { // QT
-      inflationChange -= 0.2;
-      growthChange -= 0.2;
+    // 2. Open Market Operations (QE/QT) (only if selected)
+    if (decision.openMarket) {
+      if (decision.openMarket === 'buy') { // QE
+        inflationChange += 0.2;
+        growthChange += 0.3;
+      } else if (decision.openMarket === 'sell') { // QT
+        inflationChange -= 0.2;
+        growthChange -= 0.2;
+      }
+      // 'none' does nothing
     }
-    // 'none' does nothing
-  }
 
-  // 3. Standing Facility and Minimum Reserve adjustments (optional)
-  if (decision.standingFacility === 'emergency_lending') {
-    growthChange += 0.1; // Emergency lending boosts confidence
-  } else if (decision.standingFacility === 'deposit_facility') {
-    inflationChange -= 0.05; // Discourages deposits, supports tightening
-  }
+    // 3. Standing Facility and Minimum Reserve adjustments (optional)
+    if (decision.standingFacility === 'emergency_lending') {
+      growthChange += 0.1; // Emergency lending boosts confidence
+    } else if (decision.standingFacility === 'deposit_facility') {
+      inflationChange -= 0.05; // Discourages deposits, supports tightening
+    }
 
-  if (decision.minimumReserve === 'decrease') {
-    growthChange += 0.15; // More credit available
-  } else if (decision.minimumReserve === 'increase') {
-    inflationChange -= 0.1; // Restricts money supply
+    if (decision.minimumReserve === 'decrease') {
+      growthChange += 0.15; // More credit available
+    } else if (decision.minimumReserve === 'increase') {
+      inflationChange -= 0.1; // Restricts money supply
+    }
   }
 
   // 3. Scenario Pressure (External Shocks) + Randomness based on difficulty
@@ -165,7 +175,10 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
 
   // Generate Feedback/Outcome Text
   let feedback = "";
-  if (Math.abs(newInflation.value - TARGET_INFLATION) < 0.5) {
+  if (voteRejected) {
+    feedback = "Der Rat hat Ihren Vorschlag abgelehnt! Ohne Konsens verschärft sich die wirtschaftliche Unsicherheit.";
+    nextState.score -= 15;
+  } else if (Math.abs(newInflation.value - TARGET_INFLATION) < 0.5) {
     feedback = "Gute Entscheidung! Die Inflation nähert sich dem Zielwert.";
     nextState.score += 10;
   } else if (newInflation.value > TARGET_INFLATION + 2) {

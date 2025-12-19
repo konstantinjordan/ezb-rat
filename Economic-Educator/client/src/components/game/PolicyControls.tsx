@@ -207,9 +207,6 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
               ))}
             </SelectContent>
           </Select>
-          <p className="text-sm text-muted-foreground text-center sm:text-left">
-            Ohne Begründung kein Erfolg.
-          </p>
         </div>
 
         <Button 
