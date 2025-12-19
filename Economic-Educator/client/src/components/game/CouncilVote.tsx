@@ -118,7 +118,7 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
                 initial={{ scale: 0, opacity: 0, rotateY: -90 }}
                 animate={{ scale: 1, opacity: 1, rotateY: 0 }}
                 transition={{ delay: i * 0.25, duration: 0.6 }}
-                className={`flex flex-col items-center gap-2 w-full ${i === 4 ? 'md:col-start-3' : ''}`}
+                className={`flex flex-col items-center gap-2 w-full ${i === 4 ? 'col-span-2 sm:col-start-2 sm:col-span-1 md:col-start-3' : ''}`}
               >
                 <motion.div
                   animate={{ y: agrees ? 0 : -5 }}
