@@ -98,12 +98,16 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
         <CardTitle className="text-4xl font-serif">Der EZB-Rat stimmt ab</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="mb-6 p-4 bg-card/50 border border-border rounded-lg text-base">
-          <p className="text-muted-foreground">
+        <div className="mb-6 p-4 bg-card/50 border border-border rounded-lg text-base space-y-2">
+          <div className="text-muted-foreground">
             <span className="font-semibold text-primary">🦅 Falken:</span> Fokussieren auf Inflationsbekämpfung, unterstützen höhere Zinsen.
-            <span className="ml-4 font-semibold text-secondary">🕊️ Tauben:</span> Fokussieren auf Wachstum, unterstützen niedrigere Zinsen.
-            <span className="ml-4 font-semibold text-foreground">⚖️ Mitte:</span> Balancieren beide Ziele.
-          </p>
+          </div>
+          <div className="text-muted-foreground">
+            <span className="font-semibold text-secondary">🕊️ Tauben:</span> Fokussieren auf Wachstum, unterstützen niedrigere Zinsen.
+          </div>
+          <div className="text-muted-foreground">
+            <span className="font-semibold text-foreground">⚖️ Mitte:</span> Balancieren beide Ziele.
+          </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 justify-items-center mb-6 sm:mb-8">
           {votes.map((vote, i) => {
