@@ -96,7 +96,7 @@ export default function Game() {
           </div>
           <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm font-medium flex-shrink-0">
             <div className="bg-primary-foreground/10 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
-              R{gameState.round}
+              Runde {gameState.round}
             </div>
           </div>
         </div>
