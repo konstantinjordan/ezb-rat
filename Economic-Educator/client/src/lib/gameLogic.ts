@@ -6,18 +6,20 @@ const TARGET_GROWTH = 1.5;
 
 export function createInitialState(difficulty: 'beginner' | 'advanced' | 'expert', scenario: Scenario): GameState {
   // Generate difficulty-specific initial histories
-  const baseInflation = 1.8 + (scenario.inflationPressure * 0.3);
-  const baseGrowth = 1.0 + (scenario.growthMomentum * 0.2);
+  // Beginner has lower pressure, advanced has moderate, expert has high
+  const pressureMultiplier = difficulty === 'beginner' ? 0.15 : difficulty === 'advanced' ? 0.3 : 0.45;
+  const baseInflation = 1.8 + (scenario.inflationPressure * pressureMultiplier);
+  const baseGrowth = 1.0 + (scenario.growthMomentum * pressureMultiplier);
   
   let inflationHistory: number[];
   let growthHistory: number[];
   let unemploymentHistory: number[];
   
   if (difficulty === 'beginner') {
-    // Beginner: stable progression
-    inflationHistory = [baseInflation, baseInflation + 0.1, baseInflation + 0.2, baseInflation + 0.3];
-    growthHistory = [baseGrowth, baseGrowth + 0.1, baseGrowth + 0.2, baseGrowth + 0.1];
-    unemploymentHistory = [7.0, 6.9, 6.8, 6.7];
+    // Beginner: very stable, minimal volatility
+    inflationHistory = [baseInflation, baseInflation + 0.05, baseInflation + 0.1, baseInflation + 0.1];
+    growthHistory = [baseGrowth, baseGrowth + 0.05, baseGrowth + 0.1, baseGrowth + 0.05];
+    unemploymentHistory = [7.0, 6.95, 6.9, 6.9];
   } else if (difficulty === 'advanced') {
     // Advanced: moderate volatility
     inflationHistory = [baseInflation - 0.2, baseInflation + 0.1, baseInflation + 0.4, baseInflation + 0.6];
@@ -30,8 +32,8 @@ export function createInitialState(difficulty: 'beginner' | 'advanced' | 'expert
     unemploymentHistory = [6.5, 7.0, 7.3, 7.5];
   }
   
-  const currentInflation = 2.5 + (scenario.inflationPressure);
-  const currentGrowth = 1.2 + (scenario.growthMomentum);
+  const currentInflation = 2.0 + (scenario.inflationPressure * pressureMultiplier);
+  const currentGrowth = 1.2 + (scenario.growthMomentum * pressureMultiplier);
   
   return {
     round: 1,
@@ -99,8 +101,11 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
   const voteRejected = decision.votesPassed === false;
 
   // Difficulty-based randomness: affects volatility
-  const difficultyMultiplier = nextState.difficulty === 'beginner' ? 0.5 : nextState.difficulty === 'advanced' ? 1.0 : 1.5;
+  const difficultyMultiplier = nextState.difficulty === 'beginner' ? 0.25 : nextState.difficulty === 'advanced' ? 1.0 : 1.5;
   const randomVariation = (Math.random() - 0.5) * 0.2 * difficultyMultiplier;
+  
+  // Difficulty-based scenario pressure scaling
+  const scenarioPressureMultiplier = nextState.difficulty === 'beginner' ? 0.1 : nextState.difficulty === 'advanced' ? 0.2 : 0.3;
 
   // If vote was rejected, apply negative consequences
   if (voteRejected) {
@@ -147,9 +152,9 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
   }
 
   // 3. Scenario Pressure (External Shocks) + Randomness based on difficulty
-  // Add scenario pressure and difficulty-based variation
-  inflationChange += (nextState.currentScenario.inflationPressure * 0.2) + randomVariation; 
-  growthChange += (nextState.currentScenario.growthMomentum * 0.2) + (randomVariation * 0.5);
+  // Add scenario pressure (scaled by difficulty) and difficulty-based variation
+  inflationChange += (nextState.currentScenario.inflationPressure * scenarioPressureMultiplier) + randomVariation; 
+  growthChange += (nextState.currentScenario.growthMomentum * scenarioPressureMultiplier) + (randomVariation * 0.5);
 
   // Apply changes
   newInflation.value = Math.max(0, Number((newInflation.value + inflationChange).toFixed(2)));
@@ -173,20 +178,22 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
     exchange_rate: newExchange
   };
 
-  // Generate Feedback/Outcome Text
+  // Generate Feedback/Outcome Text (difficulty-adjusted)
   let feedback = "";
+  const isBeginnerMode = nextState.difficulty === 'beginner';
+  
   if (voteRejected) {
     feedback = "Der Rat hat deinen Vorschlag abgelehnt! Ohne Konsens verschärft sich die wirtschaftliche Unsicherheit.";
-    nextState.score -= 15;
+    nextState.score -= isBeginnerMode ? 8 : 15;
   } else if (Math.abs(newInflation.value - TARGET_INFLATION) < 0.5) {
     feedback = "Gute Entscheidung! Die Inflation nähert sich dem Zielwert.";
     nextState.score += 10;
   } else if (newInflation.value > TARGET_INFLATION + 2) {
     feedback = "Vorsicht! Die Inflation gerät außer Kontrolle.";
-    nextState.score -= 10;
+    nextState.score -= isBeginnerMode ? 5 : 10;
   } else if (newGrowth.value < 0) {
     feedback = "Die Wirtschaft schrumpft (Rezession). Stimulierende Maßnahmen könnten nötig sein.";
-    nextState.score -= 5;
+    nextState.score -= isBeginnerMode ? 2 : 5;
   } else {
     feedback = "Die Auswirkungen deiner Politik zeigen sich langsam.";
   }

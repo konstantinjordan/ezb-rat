@@ -36,7 +36,6 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
     <Card className="border-t-4 border-t-secondary shadow-lg">
       <CardHeader className="pb-3 sm:pb-6">
         <CardTitle className="text-2xl sm:text-3xl">Instrumente & Entscheidung</CardTitle>
-        <CardDescription className="text-sm sm:text-base">Wähle deine geldpolitischen Maßnahmen.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
         
