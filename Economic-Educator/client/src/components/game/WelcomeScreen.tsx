@@ -36,8 +36,8 @@ export function WelcomeScreen({ onStart, difficulty }: WelcomeScreenProps) {
       >
         {/* Header */}
         <div className="text-center space-y-2 sm:space-y-3">
-          <h1 className="sm:text-5xl md:text-6xl font-serif font-bold text-[27px] text-center">{info.title}</h1>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl">{info.subtitle}</p>
+          <h1 className="text-2xl sm:text-5xl md:text-6xl font-serif font-bold text-center">{info.title}</h1>
+          <p className="text-muted-foreground text-sm sm:text-lg md:text-xl">{info.subtitle}</p>
         </div>
 
         {/* Main Intro Card */}
@@ -53,7 +53,7 @@ export function WelcomeScreen({ onStart, difficulty }: WelcomeScreenProps) {
                 Was ist die Europäische Zentralbank (EZB)?
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-xs sm:text-sm">
+            <CardContent className="space-y-3 text-sm sm:text-base">
               <p>
                 Die Europäische Zentralbank ist die Notenbank der Eurozone und verantwortlich für die Geldpolitik von 20 EU-Staaten. 
                 Ihr Hauptsitz ist in Frankfurt am Main.

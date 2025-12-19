@@ -35,13 +35,13 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
   return (
     <Card className="border-t-4 border-t-secondary shadow-lg">
       <CardHeader className="pb-3 sm:pb-6">
-        <CardTitle className="text-2xl sm:text-3xl">Instrumente & Entscheidung</CardTitle>
+        <CardTitle className="text-xl sm:text-3xl">Instrumente & Entscheidung</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
         
         {/* Leitzins */}
         <div className="space-y-2 sm:space-y-3">
-          <Label className="text-base sm:text-lg font-semibold">1. Leitzins</Label>
+          <Label className="text-sm sm:text-lg font-semibold">1. Leitzins</Label>
           <RadioGroup 
             value={interestRate || ''} 
             onValueChange={(v) => setInterestRate((v || null) as any)}
@@ -209,7 +209,7 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
         </div>
 
         <Button 
-          className="w-full mt-4 sm:mt-6 text-sm sm:text-lg py-4 sm:py-6" 
+          className="w-full mt-4 sm:mt-6 text-base sm:text-lg py-5 sm:py-6" 
           size="lg" 
           onClick={handleSubmit}
           disabled={!isFormValid || isSubmitting}

@@ -95,10 +95,10 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
   return (
     <Card className="w-full max-w-3xl mx-auto border-none shadow-none bg-transparent">
       <CardHeader className="text-center">
-        <CardTitle className="text-4xl font-serif">Der EZB-Rat stimmt ab</CardTitle>
+        <CardTitle className="text-2xl sm:text-4xl font-serif">Der EZB-Rat stimmt ab</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="mb-6 p-4 bg-card/50 border border-border rounded-lg text-base space-y-2">
+        <div className="mb-6 p-4 bg-card/50 border border-border rounded-lg text-sm sm:text-base space-y-2">
           <div className="text-muted-foreground">
             <span className="font-semibold text-primary">🦅 Falken:</span> Fokussieren auf Inflationsbekämpfung, unterstützen höhere Zinsen.
           </div>
@@ -134,9 +134,9 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
                   )}
                 </motion.div>
                 <div className="text-center">
-                  <div className="font-bold text-sm sm:text-base text-foreground">{member.name}</div>
+                  <div className="font-bold text-xs sm:text-base text-foreground">{member.name}</div>
                   <div className="text-xs text-muted-foreground hidden sm:block">{member.country}</div>
-                  <div className="text-sm text-primary font-semibold capitalize mt-0.5 sm:mt-1">
+                  <div className="text-xs sm:text-sm text-primary font-semibold capitalize mt-0.5 sm:mt-1">
                     {member.type === 'hawk' ? '🦅 Falke' : member.type === 'dove' ? '🕊️ Taube' : '⚖️ Mitte'}
                   </div>
                 </div>

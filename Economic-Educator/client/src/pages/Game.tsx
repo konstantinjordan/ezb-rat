@@ -118,8 +118,8 @@ export default function Game() {
               className="space-y-6"
             >
               <div className="text-center mb-4 sm:mb-8">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3">{gameState.currentScenario.title}</h2>
-                <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">{gameState.currentScenario.economicContext}</p>
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-3">{gameState.currentScenario.title}</h2>
+                <p className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">{gameState.currentScenario.economicContext}</p>
               </div>
 
               <NewsTicker news={gameState.currentScenario.newsFlash} />
@@ -157,9 +157,9 @@ export default function Game() {
             >
               <div className="text-center space-y-4">
                 <div className="inline-block p-4 rounded-full bg-primary/10 mb-4">
-                  <h2 className="text-4xl font-bold text-primary">Ergebnisse der Runde {gameState.round - 1}</h2>
+                  <h2 className="text-2xl sm:text-4xl font-bold text-primary">Ergebnisse der Runde {gameState.round - 1}</h2>
                 </div>
-                <p className="text-2xl font-serif max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg sm:text-2xl font-serif max-w-2xl mx-auto leading-relaxed">
                   {gameState.feedback}
                 </p>
               </div>
@@ -184,14 +184,14 @@ export default function Game() {
               className="space-y-8 py-12"
             >
               <div className="text-center space-y-6">
-                <h2 className="text-5xl sm:text-6xl font-serif font-bold text-primary mb-4">
+                <h2 className="text-3xl sm:text-6xl font-serif font-bold text-primary mb-4">
                   Spiel vorbei!
                 </h2>
                 <div className="inline-block p-6 rounded-lg bg-primary/10 border-2 border-primary">
-                  <p className="text-6xl font-bold text-primary">{gameState.score}</p>
-                  <p className="text-xl text-muted-foreground mt-2">Punkte</p>
+                  <p className="text-4xl sm:text-6xl font-bold text-primary">{gameState.score}</p>
+                  <p className="text-base sm:text-xl text-muted-foreground mt-2">Punkte</p>
                 </div>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto">
                   Du hast 5 Runden als EZB-Ratsvorsitzender absolviert.
                 </p>
               </div>
