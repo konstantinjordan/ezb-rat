@@ -1,0 +1,4 @@
+{
+  "buildCommand": "cd Economic-Educator && npm run build",
+  "startCommand": "cd Economic-Educator && npm start"
+}

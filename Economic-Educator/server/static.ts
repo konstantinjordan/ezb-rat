@@ -3,9 +3,19 @@ import fs from "fs";
 import path from "path";
 
 export function serveStatic(app: Express) {
-  // When bundled, the dist/index.cjs is in the dist folder
-  // so dist/public is a sibling directory
-  const distPath = path.resolve(process.cwd(), "dist", "public");
+  // Resolve the path to dist/public from the current module's location
+  // This works whether running from Economic-Educator or from root
+  let distPath = path.resolve(__dirname, "public");
+  
+  // If not found (happens when bundled), try from process.cwd()
+  if (!fs.existsSync(distPath)) {
+    distPath = path.resolve(process.cwd(), "Economic-Educator", "dist", "public");
+  }
+  
+  // Last resort: try dist/public from cwd
+  if (!fs.existsSync(distPath)) {
+    distPath = path.resolve(process.cwd(), "dist", "public");
+  }
   
   if (!fs.existsSync(distPath)) {
     throw new Error(
