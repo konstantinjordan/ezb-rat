@@ -176,7 +176,7 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
   // Generate Feedback/Outcome Text
   let feedback = "";
   if (voteRejected) {
-    feedback = "Der Rat hat Ihren Vorschlag abgelehnt! Ohne Konsens verschärft sich die wirtschaftliche Unsicherheit.";
+    feedback = "Der Rat hat deinen Vorschlag abgelehnt! Ohne Konsens verschärft sich die wirtschaftliche Unsicherheit.";
     nextState.score -= 15;
   } else if (Math.abs(newInflation.value - TARGET_INFLATION) < 0.5) {
     feedback = "Gute Entscheidung! Die Inflation nähert sich dem Zielwert.";
@@ -188,7 +188,7 @@ export function calculateNextState(currentState: GameState, decision: PlayerDeci
     feedback = "Die Wirtschaft schrumpft (Rezession). Stimulierende Maßnahmen könnten nötig sein.";
     nextState.score -= 5;
   } else {
-    feedback = "Die Auswirkungen Ihrer Politik zeigen sich langsam.";
+    feedback = "Die Auswirkungen deiner Politik zeigen sich langsam.";
   }
 
   nextState.round += 1;

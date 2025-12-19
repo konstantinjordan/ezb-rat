@@ -195,7 +195,7 @@ export default function Game() {
                   <p className="text-xl text-muted-foreground mt-2">Punkte</p>
                 </div>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Sie haben 5 Runden als EZB-Ratsvorsitzender absolviert.
+                  Du hast 5 Runden als EZB-Ratsvorsitzender absolviert.
                 </p>
               </div>
 

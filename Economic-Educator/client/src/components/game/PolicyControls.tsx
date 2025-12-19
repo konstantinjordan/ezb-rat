@@ -36,7 +36,7 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
     <Card className="border-t-4 border-t-secondary shadow-lg">
       <CardHeader className="pb-3 sm:pb-6">
         <CardTitle className="text-2xl sm:text-3xl">Instrumente & Entscheidung</CardTitle>
-        <CardDescription className="text-sm sm:text-base">Wählen Sie Ihre geldpolitischen Maßnahmen.</CardDescription>
+        <CardDescription className="text-sm sm:text-base">Wähle deine geldpolitischen Maßnahmen.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
         
@@ -197,7 +197,7 @@ export function PolicyControls({ onSubmit, isSubmitting = false }: PolicyControl
           <Label className="text-base sm:text-lg font-semibold">5. Begründung für den Rat</Label>
           <Select value={argument} onValueChange={setArgument}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Wählen Sie Ihr Hauptargument..." />
+              <SelectValue placeholder="Wähle dein Hauptargument..." />
             </SelectTrigger>
             <SelectContent>
               {ARGUMENTS.map((arg) => (

@@ -157,7 +157,7 @@ export function CouncilVote({ decision, onComplete }: CouncilVoteProps) {
           
           <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground mb-4 pt-4 border-t border-border/50">
             <div>
-              <div className="font-semibold text-foreground mb-1">Ihre Maßnahmen:</div>
+              <div className="font-semibold text-foreground mb-1">Deine Maßnahmen:</div>
               <ul className="space-y-1 opacity-80">
                 <li>• Leitzins: <span className="capitalize text-primary font-medium">{decision.interestRate === 'raise' ? 'erhöhen' : decision.interestRate === 'lower' ? 'senken' : 'halten'}</span></li>
                 <li>• Anleihekäufe: <span className="capitalize text-primary font-medium">{decision.openMarket === 'buy' ? 'kaufen' : decision.openMarket === 'sell' ? 'verkaufen' : 'neutral'}</span></li>
